@@ -43,16 +43,22 @@
 
 class LCD1602 {
 	protected:
-		uint8_t bitMode; //flag for 8bit mode
-		int8_t pins;
+		bool use4bits; //flag for 8bit mode
+		bool banner;
 	
 	public:
-		void attach(int8_t [8]pins);
-		void sendChar(uint8_t c);
-		void sendStr(const uint8_t *format, ...)
+		void start(bool use4bits);
+		void sendf(const char *format, ...);
+		void sendc(char c);
+		int getPos();
+		void clear();
+		void moveCursor(int pos);
 		
 	private:
-		void sendByte(uint8_t byte);
+		void sendInstruction(uint8_t data);
+		void sendData(uint8_t data);
+		void transmit(uint8_t data);
+		void enable();
 };
 
 #endif
